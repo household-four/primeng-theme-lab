@@ -1,3 +1,60 @@
-<p>lab works!</p>
-The lab will  have a panel on one side of the screen that has a control for every aspect of a theme that is editable. 
-The other side of the screen will have all primeng components displayed so you can see what they look like when you change the theme.
+<div class="flex">
+    <div style="width: 50%; padding: 1rem;">
+        <h2>Primitive Color Palettes</h2>
+        <div *ngFor="let palette of primitiveColors | keyvalue">
+            <h4>{{ palette.key }}</h4>
+            <div class="palette" style="margin-bottom: 1rem; width: 100%;">
+                <div class="color-swatch" *ngFor="let shade of palette.value | keyvalue"
+                    [style.background]="shade.value" [title]="shade.key + ': ' + shade.value"
+                    style="text-align: center; padding: 0.5rem; color: white;">
+                    <span>{{ shade.key }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="width: 50%; padding: 1rem;">
+        <p>lab works!</p>
+        The lab will have a panel on one side of the screen that has a control for every aspect of a theme that is
+        editable.
+        The other side of the screen will have all primeng components displayed so you can see what they look like
+        when you change the theme.
+        <p-accordion value="0">
+            <p-accordion-panel value="0">
+                <p-accordion-header>Header I</p-accordion-header>
+                <p-accordion-content>
+                    <p class="m-0">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+                        laborum.
+                    </p>
+                </p-accordion-content>
+            </p-accordion-panel>
+        
+            <p-accordion-panel value="1">
+                <p-accordion-header>Header II</p-accordion-header>
+                <p-accordion-content>
+                    <p class="m-0">
+                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
+                        aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo
+                        enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos
+                        qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.
+                    </p>
+                </p-accordion-content>
+            </p-accordion-panel>
+        
+            <p-accordion-panel value="2">
+                <p-accordion-header>Header III</p-accordion-header>
+                <p-accordion-content>
+                    <p class="m-0">
+                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
+                        aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo
+                        enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos
+                        qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.
+                    </p>
+                </p-accordion-content>
+            </p-accordion-panel>
+        </p-accordion>
+    </div>
+</div>
