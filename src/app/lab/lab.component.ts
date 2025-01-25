@@ -262,7 +262,9 @@ export class LabComponent implements OnInit {
     const themeObjectString = match[1].trim();
   
     try {
-      const themeObject = eval(`(${themeObjectString})`);
+      // removes leading and trailing parentheses
+      const cleanedThemeObjectString = themeObjectString.replace(/^\(|\)$/g, '');
+      const themeObject = JSON.parse(cleanedThemeObjectString);
   
       if (typeof themeObject !== 'object') {
         throw new Error('Invalid theme object.');
