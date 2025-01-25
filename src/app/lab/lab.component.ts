@@ -50,6 +50,18 @@ import { FieldsetModule } from 'primeng/fieldset';
   styleUrls: ['./lab.component.scss']
 })
 
+/* TODO
+- lab should parse the current theme and display it so the user can see every option
+- allow the user to edit each option in the theme and see it update the components on the right
+- allow users to download and allow theme files 
+- display all primeng components
+- is it possible: allow users a sandbox to configure their own html so they can see how their theme will look in a particular configuration of UI components
+- alternatively, allow users to move around and duplicate the primeng components on the screen
+- allow users to generate color gradients that are not the default primitive or semantic colors
+- allow users to edit the component design token of each component individually 
+- differentiate between light and dark mode and update the theme accordingly
+*/
+
 export class LabComponent implements OnInit {
   constructor(private messageService: MessageService) { }
 
@@ -77,6 +89,7 @@ export class LabComponent implements OnInit {
     this.setPreset(MyPreset);
   }
 
+  // updates the variables in this class with the preset that was just applied
   setPreset(newPreset: Preset) {
     this.currentTheme = newPreset;
     const { borderRadius, ...restPrimitive } = this.currentTheme.primitive;
@@ -105,7 +118,7 @@ export class LabComponent implements OnInit {
       this.setPreset(newPreset);
       return
     }
-    
+
     const newPreset = updatePreset({
       [type]: {
         [color]: newPalette
