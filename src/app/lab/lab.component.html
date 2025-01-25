@@ -36,92 +36,75 @@
     </div>
     <div style="width: 50%; padding: 1rem;">
         <h2><i class="pi pi-prime"></i>&nbsp; PrimeNG Components</h2>
-        <p-accordion value="0">
-            <p-accordion-panel value="0">
-                <p-accordion-header>Buttons</p-accordion-header>
-                <p-accordion-content>
-                    <i>Button</i>
-                    <div class="card flex flex-wrap gap-3 justify-center">
-                        <p-button label="Primary" />
-                        <p-button label="Secondary" severity="secondary" />
-                        <p-button label="Success" severity="success" />
-                        <p-button label="Info" severity="info" />
-                        <p-button label="Warn" severity="warn" />
-                        <p-button label="Help" severity="help" />
-                        <p-button label="Danger" severity="danger" />
-                        <p-button label="Contrast" severity="contrast" />
-                    </div>
-                    <br>
-                    <i>SpeedDial</i>
-                    <div style="height: 60px; position: relative;">
-                        <p-speeddial [model]="speedDialItems" direction="right"
-                            [style]="{ position: 'absolute', top: 'calc(70% - 2rem)', left: 0 }" />
-                    </div>
-                    <br>
-                    <i>SplitButton</i>
-                    <div class="card flex justify-center flex-wrap gap-4">
-                        <p-splitbutton label="Save" (onClick)="success()" [model]="items" />
-                        <p-splitbutton label="Save" (onClick)="success()" [model]="items" severity="secondary" />
-                        <p-splitbutton label="Save" (onClick)="success()" [model]="items" severity="success" />
-                        <p-splitbutton label="Save" (onClick)="success()" [model]="items" severity="info" />
-                        <p-splitbutton label="Save" (onClick)="success()" [model]="items" severity="warn" />
-                        <p-splitbutton label="Save" (onClick)="success()" [model]="items" severity="help" />
-                        <p-splitbutton label="Save" (onClick)="success()" [model]="items" severity="danger" />
-                    </div>
+        <p-fieldset legend="Buttons" [toggleable]="true">
+            <i>Button</i>
+            <div class="card flex flex-wrap gap-3 justify-center">
+                <p-button label="Primary" />
+                <p-button label="Secondary" severity="secondary" />
+                <p-button label="Success" severity="success" />
+                <p-button label="Info" severity="info" />
+                <p-button label="Warn" severity="warn" />
+                <p-button label="Help" severity="help" />
+                <p-button label="Danger" severity="danger" />
+                <p-button label="Contrast" severity="contrast" />
+            </div>
+            <br>
+            <i>SpeedDial</i>
+            <div style="height: 60px; position: relative;">
+                <p-speeddial [model]="speedDialItems" direction="right"
+                    [style]="{ position: 'absolute', top: 'calc(70% - 2rem)', left: 0 }" />
+            </div>
+            <br>
+            <i>SplitButton</i>
+            <div class="card flex justify-center flex-wrap gap-4">
+                <p-splitbutton label="Save" (onClick)="success()" [model]="items" />
+                <p-splitbutton label="Save" (onClick)="success()" [model]="items" severity="secondary" />
+                <p-splitbutton label="Save" (onClick)="success()" [model]="items" severity="success" />
+                <p-splitbutton label="Save" (onClick)="success()" [model]="items" severity="info" />
+                <p-splitbutton label="Save" (onClick)="success()" [model]="items" severity="warn" />
+                <p-splitbutton label="Save" (onClick)="success()" [model]="items" severity="help" />
+                <p-splitbutton label="Save" (onClick)="success()" [model]="items" severity="danger" />
+            </div>
+        </p-fieldset>
+        <p-fieldset legend="Form" [toggleable]="true">
+            <i>Checkbox, ColorPicker, DataPicker</i>
+            <div class="card flex justify-center gap-3 align-items-center">
+                <p-checkbox [binary]="true" />
+                <p-colorpicker/>
+                
+            </div>
+            <br>
+            <i>DatePicker</i>
+            <div class="card flex justify-center">
+                <p-datepicker/>
+            </div>
+            <br>
+            <i>FloatLabel, iconField, InputIcon</i>
+            <div class="card flex justify-center" style="padding-top: 20px">
+                <p-floatlabel>
+                    <input id="username" pInputText />
+                    <label for="username">Username</label>
+                </p-floatlabel>
 
-                </p-accordion-content>
-            </p-accordion-panel>
+                <p-iconfield>
+                    <p-inputicon styleClass="pi pi-search" />
+                    <input type="text" pInputText placeholder="Search" />
+                </p-iconfield>
+            </div>
+            <br>
+            <i>Knob</i>
+            <div class="card flex justify-center">
+                <p-knob />
+            </div>
+        </p-fieldset>
+        <p-fieldset legend="Data" [toggleable]="true">
 
-            <p-accordion-panel value="1">
-                <p-accordion-header>Form</p-accordion-header>
-                <p-accordion-content>
-                    <i>Checkbox, ColorPicker, DataPicker</i>
-                    <div class="card flex justify-center gap-3 align-items-center">
-                        <p-checkbox [binary]="true" />
-                        <p-colorpicker/>
-                        
-                    </div>
-                    <br>
-                    <i>DatePicker</i>
-                    <div class="card flex justify-center">
-                        <p-datepicker/>
-                    </div>
-                    <br>
-                    <i>FloatLabel, iconField, InputIcon</i>
-                    <div class="card flex justify-center" style="padding-top: 20px">
-                        <p-floatlabel>
-                            <input id="username" pInputText />
-                            <label for="username">Username</label>
-                        </p-floatlabel>
 
-                        <p-iconfield>
-                            <p-inputicon styleClass="pi pi-search" />
-                            <input type="text" pInputText placeholder="Search" />
-                        </p-iconfield>
-                    </div>
-                    <br>
-                    <i>Knob</i>
-                    <div class="card flex justify-center">
-                        <p-knob />
-                    </div>
-                </p-accordion-content>
-            </p-accordion-panel>
+        </p-fieldset>
+        <p-fieldset legend="Panel" [toggleable]="true">
 
-            <p-accordion-panel value="2">
-                <p-accordion-header>Header III</p-accordion-header>
-                <p-accordion-content>
-                    <p class="m-0">
-                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                        laudantium, totam rem
-                        aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
-                        explicabo. Nemo
-                        enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur
-                        magni dolores eos
-                        qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius
-                        modi.
-                    </p>
-                </p-accordion-content>
-            </p-accordion-panel>
-        </p-accordion>
+
+        </p-fieldset>
+    
     </div>
 </div>

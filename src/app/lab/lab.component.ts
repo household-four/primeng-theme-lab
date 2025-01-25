@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MyPreset } from '../../styles/MyTheme';
-import { Preset, Primitive, Semantic } from './theme';
+import { ColorPalette, Preset, Primitive, Semantic } from './theme';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { palette, updatePreset, usePreset } from '@primeng/themes';
@@ -15,8 +15,11 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { MessageService } from 'primeng/api';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { ToastModule } from 'primeng/toast';
+import { FieldsetModule } from 'primeng/fieldset';
+
 
 
 @Component({
@@ -29,6 +32,7 @@ import { ToastModule } from 'primeng/toast';
     ColorPickerModule, 
     CommonModule, 
     DatePickerModule,
+    FieldsetModule,
     FloatLabel,
     FloatLabelModule,
     FormsModule,
@@ -36,6 +40,7 @@ import { ToastModule } from 'primeng/toast';
     InputIconModule,
     KnobModule,
     ReactiveFormsModule,
+    ScrollPanelModule,
     SpeedDialModule,
     SplitButtonModule,
     ToastModule
@@ -51,7 +56,7 @@ export class LabComponent implements OnInit {
   currentTheme!: Preset;
 
   primitiveColors!: Omit<Primitive, 'borderRadius'>
-  semanticColors!: Pick<Semantic, 'primary'>
+  semanticColors!: {primary: ColorPalette, surface: ColorPalette};
 
   speedDialItems = [
     { icon: 'pi pi-pencil'},
@@ -77,14 +82,30 @@ export class LabComponent implements OnInit {
     const { borderRadius, ...restPrimitive } = this.currentTheme.primitive;
     const { primary, ...restSemantic} = this.currentTheme.semantic;
     this.primitiveColors = restPrimitive;
-    this.semanticColors= {primary: primary};
+    this.semanticColors= {primary: primary, surface: this.currentTheme.semantic.colorScheme.light.surface};
     console.log(this.primitiveColors);
     console.log(this.semanticColors);
   }
 
   // creates a new palette with the given hex code
-  updatePalette(color: string, $event: ColorPickerChangeEvent, type: 'primitive' | 'semantic') {
+  updatePalette(color: string, $event: ColorPickerChangeEvent, type: 'primitive' | 'semantic' | 'surface'): void {
     const newPalette = palette($event.value as string);
+
+    if (color === 'surface') {
+      const newPreset = updatePreset({
+        semantic: {
+          colorScheme: {
+            light: {
+              surface: newPalette
+            }
+          }
+        }
+      });
+      usePreset(newPreset);
+      this.setPreset(newPreset);
+      return
+    }
+    
     const newPreset = updatePreset({
       [type]: {
         [color]: newPalette
