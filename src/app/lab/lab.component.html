@@ -40,6 +40,7 @@
             <p-accordion-panel value="0">
                 <p-accordion-header>Buttons</p-accordion-header>
                 <p-accordion-content>
+                    <i>Button</i>
                     <div class="card flex flex-wrap gap-3 justify-center">
                         <p-button label="Primary" />
                         <p-button label="Secondary" severity="secondary" />
@@ -50,10 +51,14 @@
                         <p-button label="Danger" severity="danger" />
                         <p-button label="Contrast" severity="contrast" />
                     </div>
+                    <br>
+                    <i>SpeedDial</i>
                     <div style="height: 60px; position: relative;">
                         <p-speeddial [model]="speedDialItems" direction="right"
                             [style]="{ position: 'absolute', top: 'calc(70% - 2rem)', left: 0 }" />
                     </div>
+                    <br>
+                    <i>SplitButton</i>
                     <div class="card flex justify-center flex-wrap gap-4">
                         <p-splitbutton label="Save" (onClick)="success()" [model]="items" />
                         <p-splitbutton label="Save" (onClick)="success()" [model]="items" severity="secondary" />
@@ -68,18 +73,37 @@
             </p-accordion-panel>
 
             <p-accordion-panel value="1">
-                <p-accordion-header>Header II</p-accordion-header>
+                <p-accordion-header>Form</p-accordion-header>
                 <p-accordion-content>
-                    <p class="m-0">
-                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                        laudantium, totam rem
-                        aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
-                        explicabo. Nemo
-                        enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur
-                        magni dolores eos
-                        qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius
-                        modi.
-                    </p>
+                    <i>Checkbox, ColorPicker, DataPicker</i>
+                    <div class="card flex justify-center gap-3 align-items-center">
+                        <p-checkbox [binary]="true" />
+                        <p-colorpicker/>
+                        
+                    </div>
+                    <br>
+                    <i>DatePicker</i>
+                    <div class="card flex justify-center">
+                        <p-datepicker/>
+                    </div>
+                    <br>
+                    <i>FloatLabel, iconField, InputIcon</i>
+                    <div class="card flex justify-center" style="padding-top: 20px">
+                        <p-floatlabel>
+                            <input id="username" pInputText />
+                            <label for="username">Username</label>
+                        </p-floatlabel>
+
+                        <p-iconfield>
+                            <p-inputicon styleClass="pi pi-search" />
+                            <input type="text" pInputText placeholder="Search" />
+                        </p-iconfield>
+                    </div>
+                    <br>
+                    <i>Knob</i>
+                    <div class="card flex justify-center">
+                        <p-knob />
+                    </div>
                 </p-accordion-content>
             </p-accordion-panel>
 

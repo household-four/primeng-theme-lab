@@ -6,11 +6,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { palette, updatePreset, usePreset } from '@primeng/themes';
 import { AccordionModule } from 'primeng/accordion';
 import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
 import { ColorPickerChangeEvent, ColorPickerModule } from 'primeng/colorpicker';
+import { DatePickerModule } from 'primeng/datepicker';
+import { FloatLabel, FloatLabelModule } from 'primeng/floatlabel';
+import { KnobModule } from 'primeng/knob';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { MessageService } from 'primeng/api';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { ToastModule } from 'primeng/toast';
+
 
 @Component({
   selector: 'app-lab',
@@ -18,9 +25,16 @@ import { ToastModule } from 'primeng/toast';
   imports: [
     AccordionModule,
     ButtonModule,
+    CheckboxModule,
     ColorPickerModule, 
     CommonModule, 
+    DatePickerModule,
+    FloatLabel,
+    FloatLabelModule,
     FormsModule,
+    IconFieldModule,
+    InputIconModule,
+    KnobModule,
     ReactiveFormsModule,
     SpeedDialModule,
     SplitButtonModule,
