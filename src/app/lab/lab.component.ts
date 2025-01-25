@@ -3,7 +3,7 @@ import { MyPreset } from '../../styles/MyTheme';
 import { ColorPalette, Preset, Primitive, Semantic } from './theme';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { palette, updatePreset, usePreset } from '@primeng/themes';
+import { $dt, palette, updatePreset, updateSurfacePalette, usePreset } from '@primeng/themes';
 import { AccordionModule } from 'primeng/accordion';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -18,6 +18,7 @@ import { MessageService } from 'primeng/api';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { ToastModule } from 'primeng/toast';
+import { ToolbarModule } from 'primeng/toolbar';
 import { FieldsetModule } from 'primeng/fieldset';
 
 
@@ -43,7 +44,8 @@ import { FieldsetModule } from 'primeng/fieldset';
     ScrollPanelModule,
     SpeedDialModule,
     SplitButtonModule,
-    ToastModule
+    ToastModule,
+    ToolbarModule
   ],
   providers: [MessageService],
   templateUrl: './lab.component.html',
@@ -60,6 +62,7 @@ import { FieldsetModule } from 'primeng/fieldset';
 - allow users to generate color gradients that are not the default primitive or semantic colors
 - allow users to edit the component design token of each component individually 
 ✅ differentiate between light and dark mode and update the theme accordingly
+- it would be nice to map each design token to components so users can see which components will be affected by changing a particular design token
 */
 
 export class LabComponent implements OnInit {
@@ -67,6 +70,7 @@ export class LabComponent implements OnInit {
 
   currentTheme!: Preset;
   mode: "light" | "dark" = "light";
+  modeIcon: "pi pi-sun" | "pi pi-moon" = "pi pi-sun";
 
   primitiveColors!: Omit<Primitive, 'borderRadius'>
   semanticColors!: {primary: ColorPalette, surface: ColorPalette};
@@ -87,8 +91,18 @@ export class LabComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+    const isDark = window?.matchMedia?.('(prefers-color-scheme:dark)')?.matches;
+    this.mode = isDark ? 'dark' : 'light';
+    console.log(`we are  in ${this.mode} mode`);
+    this.modeIcon = isDark ? 'pi pi-moon' : 'pi pi-sun';
+    
+
     this.setPreset(MyPreset);
-    this.mode = window?.matchMedia?.('(prefers-color-scheme:dark)')?.matches ? 'dark' : 'light';
+
+    const element = document.querySelector('html');
+    if (element) {
+      element.classList.toggle('dark');
+    }
   }
 
   // updates the variables in this class with the preset that was just applied
@@ -97,6 +111,7 @@ export class LabComponent implements OnInit {
     const { borderRadius, ...restPrimitive } = this.currentTheme.primitive;
     const { primary, ...restSemantic} = this.currentTheme.semantic;
     this.primitiveColors = restPrimitive;
+    console.log("this.mode", this.mode)
     this.semanticColors= {primary: primary, surface: this.currentTheme.semantic.colorScheme[this.mode].surface};
     console.log(this.primitiveColors);
     console.log(this.semanticColors);
@@ -107,14 +122,8 @@ export class LabComponent implements OnInit {
     const newPalette = palette($event.value as string);
 
     if (color === 'surface') {
-      const newPreset = updatePreset({
-        semantic: {
-          colorScheme: {
-            [this.mode]: {
-              surface: newPalette
-            }
-          }
-        }
+      const newPreset = updateSurfacePalette({
+        [this.mode]: newPalette
       });
       usePreset(newPreset);
       this.setPreset(newPreset);
@@ -134,15 +143,9 @@ export class LabComponent implements OnInit {
   updateSwatch(color: string, shade: string, hex: string, type: 'primitive' | 'semantic' | 'surface'): void {
     
     if (color === 'surface') {
-      const newPreset = updatePreset({
-        semantic: {
-          colorScheme: {
-            [this.mode]: {
-              surface: {
-                [shade]: hex
-              }
-            }
-          }
+      const newPreset = updateSurfacePalette({
+        [this.mode]: {
+          [shade]: hex
         }
       });
       usePreset(newPreset);
@@ -179,4 +182,23 @@ export class LabComponent implements OnInit {
     this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Info Toast' });
   }
 
+  updateBorders() { 
+    // this should update the color used by all components that have a border design token. 
+    // the components currently use one of the 'surface' colors for borders, 
+    // but if you want to have a unique border color and leave the surface palette alone,
+    // we should let people do that 
+  }
+
+  toggleDarkMode(): void {
+    this.mode = this.mode === 'light' ? 'dark' : 'light';
+    this.modeIcon = this.mode === 'light' ? 'pi pi-sun' : 'pi pi-moon';
+    const element = document.querySelector('html');
+    if (element) {
+      element.classList.toggle('dark');
+      console.log("setting dark")
+
+      // still uses the current theme, but updates the surface colors to the new mode
+      this.setPreset(this.currentTheme);
+    }
+  }
 }

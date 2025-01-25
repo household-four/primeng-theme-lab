@@ -16,3 +16,16 @@
     display: flex;
     flex-wrap: wrap;
   }
+
+  @media (prefers-color-scheme: light) {
+    .background {
+        //background-color: var(--surface-50);
+        background-color: var(--surface-50);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .background {
+        background-color: var(--surface-900);
+    }
+}
