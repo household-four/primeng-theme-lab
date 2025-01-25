@@ -4,7 +4,7 @@ export const routes: Routes = [
     {
         path: '',
         loadComponent: () =>
-            import('./app.component').then(m => m.AppComponent)
+            import('./home/home.component').then(m => m.HomeComponent)
     },
     {
         path: 'library',

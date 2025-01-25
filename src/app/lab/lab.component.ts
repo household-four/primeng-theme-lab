@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './lab.component.html',
-  styleUrl: './lab.component.scss'
+  styleUrls: ['./lab.component.scss']
 })
 export class LabComponent {
 
