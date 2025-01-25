@@ -5,6 +5,7 @@ import { routes } from './app.routes';
 import { MyPreset } from '../styles/MyTheme';
 import { providePrimeNG } from 'primeng/config';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { NewPreset } from '../styles/new-preset';
 
 export const appConfig: ApplicationConfig = {
   providers: [

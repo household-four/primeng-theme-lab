@@ -3,18 +3,34 @@
 <p-toolbar>
     <ng-template #start>
         <p-button icon="pi pi-plus" class="mr-2" text severity="secondary" />
-        <p-button icon="pi pi-print" class="mr-2" text severity="secondary" />
-        <p-button icon="pi pi-upload" text severity="secondary" />
+        <p-button icon="pi pi-upload" class="mr-2" text severity="secondary" (click)="fileInput.click()" />
+        <input #fileInput type="file" accept=".ts" style="display: none;" (change)="handleFileInput($event)"/>
+        <p-button icon="pi pi-file-export" text severity="secondary" (click)="exportTheme()"/>
     </ng-template>
     <ng-template #end>
         <p-button [icon]="modeIcon" class="mr-2" text severity="secondary" (click)="toggleDarkMode()"/>
+        <p-button [icon]="modeIcon" class="mr-2" text severity="secondary" (click)="toggleDarkMode()"/>
     </ng-template>
 </p-toolbar>
-<div class="flex background">
+<div class="flex" [style.backgroundColor]="mode === 'dark' ? 'var(--surface-900)' : 'var(--surface-50)'">
     <p-toast />
     
     <div class="flex flex-wrap gap-4" style="width: 50%; padding: 1rem;">
-        <div>
+        <div class="flex col-12 p-0 gap-4 justify-content-start">
+            <div class="flex-1"> 
+                <h4>Select a preset: </h4>
+                <p-checkbox [binary]="true" />
+                <p-checkbox [binary]="true" />
+                <p-checkbox [binary]="true" />
+                <p-checkbox [binary]="true" />
+            </div>
+            <div class="flex-1"> 
+                <h4>Or upload an existing theme: </h4>
+                <p-button icon="pi pi-upload" class="mr-2" text severity="secondary" (click)="fileInput.click()" />
+                <input #fileInput type="file" accept=".ts" style="display: none;" (change)="handleFileInput($event)"/>
+            </div>
+        </div>
+        <div class="flex-1">
             <h2><i class="pi pi-palette"></i>&nbsp;Primitive Color Palettes</h2>
             <div *ngFor="let palette of primitiveColors | keyvalue">
                 <div class="flex align-items-center">
@@ -31,7 +47,7 @@
                 </div>
             </div>
         </div>
-        <div>
+        <div class="flex-1">
             <h2><i class="pi pi-palette"></i>&nbsp;Semantic Color Palettes</h2>
             <div *ngFor="let palette of semanticColors | keyvalue">
                 <div class="flex align-items-center">
