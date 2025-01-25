@@ -1,4 +1,5 @@
 # PrimeNGThemeLab
+This is a project for sharing and creating themes for PrimeNG and is not affiliated with or endorsed by PrimeTek or PrimeNG.
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.4.
 

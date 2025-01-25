@@ -1,67 +1,112 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MyPreset } from '../../styles/MyTheme';
-import { Primitive, Semantic } from './theme';
+import { Preset, Primitive, Semantic } from './theme';
 import { CommonModule } from '@angular/common';
-import { palette } from '@primeng/themes';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { palette, updatePreset, usePreset } from '@primeng/themes';
 import { AccordionModule } from 'primeng/accordion';
+import { ButtonModule } from 'primeng/button';
+import { ColorPickerChangeEvent, ColorPickerModule } from 'primeng/colorpicker';
+import { SpeedDialModule } from 'primeng/speeddial';
+import { MessageService } from 'primeng/api';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-lab',
   standalone: true,
   imports: [
     AccordionModule,
-    CommonModule
+    ButtonModule,
+    ColorPickerModule, 
+    CommonModule, 
+    FormsModule,
+    ReactiveFormsModule,
+    SpeedDialModule,
+    SplitButtonModule,
+    ToastModule
   ],
+  providers: [MessageService],
   templateUrl: './lab.component.html',
   styleUrls: ['./lab.component.scss']
 })
 
-/* TODO
-- lab should parse the current theme and display it so the user can see every option
-- allow the user to edit each option in the theme and see it update the components on the right
-- allow users to download and allow theme files 
-- display all primeng components
-- is it possible: allow users a sandbox to configure their own html so they can see how their theme will look in a particular configuration of UI components
-- alternatively, allow users to move around and duplicate the primeng components on the screen
-- allow users to generate color gradients that are not the default primitive or semantic colors
-- allow users to edit the component design token of each component individually 
-*/
 export class LabComponent implements OnInit {
-  constructor() { }
+  constructor(private messageService: MessageService) { }
 
-  // currentTheme: {
-  //   primitive: any, 
-  //   semantic: any, 
-  //   components?: any
-  // } = {primitive: {}, semantic: {}};
-  currentTheme!: {
-    primitive: Primitive 
-    semantic: Semantic, 
-    components?: any
-  }
+  currentTheme!: Preset;
 
   primitiveColors!: Omit<Primitive, 'borderRadius'>
+  semanticColors!: Pick<Semantic, 'primary'>
+
+  speedDialItems = [
+    { icon: 'pi pi-pencil'},
+    { icon: 'pi pi-refresh'},
+    { icon: 'pi pi-trash'},
+    { icon: 'pi pi-upload'},
+    { icon: 'pi pi-external-link'}
+  ];
+
+  items = [
+    {label: 'Update',command: () => {this.success();} },
+    { label: 'Delete',command: () => {this.info();} },
+    { label: 'Angular Website', url: 'http://angular.io' },
+    { label: 'Upload', command: () => {this.info();} }
+  ];
 
   ngOnInit(): void {
-    this.currentTheme = MyPreset;
+    this.setPreset(MyPreset);
+  }
 
-    const { borderRadius, ...rest } = this.currentTheme.primitive;
-    this.primitiveColors = rest;
+  setPreset(newPreset: Preset) {
+    this.currentTheme = newPreset;
+    const { borderRadius, ...restPrimitive } = this.currentTheme.primitive;
+    const { primary, ...restSemantic} = this.currentTheme.semantic;
+    this.primitiveColors = restPrimitive;
+    this.semanticColors= {primary: primary};
+    console.log(this.primitiveColors);
+    console.log(this.semanticColors);
+  }
 
-    console.log("primitive",this.primitiveColors.amber);
-    //console.log("palette", palette('#f59e0b'))
-    for (let color in this.primitiveColors.amber) {
-      console.log(color + " ")
-    }
-    console.log("600", palette('#d97706'))
-    console.log("100", palette('#fef3c7'))
-    console.log("950", palette('#451a03'))
-    console.log("900", palette('#78350f'))
-    console.log("800", palette('#92400e'))
-    console.log("700", palette('#b45309'))
-    console.log("400", palette('#fbbf24'))
-    console.log("300", palette('#fcd34d'))
-    console.log("200", palette('#fde68a'))
+  // creates a new palette with the given hex code
+  updatePalette(color: string, $event: ColorPickerChangeEvent, type: 'primitive' | 'semantic') {
+    const newPalette = palette($event.value as string);
+    const newPreset = updatePreset({
+      [type]: {
+        [color]: newPalette
+      }
+    });
+    usePreset(newPreset);
+    this.setPreset(newPreset);
+  }
+
+  updateSwatch(color: string, ) {
+    // const newPalette = palette($event.value as string);
+    // const newPreset = updatePreset({
+    //   primitive: {
+    //     [color]: newPalette
+    //   }
+    // });
+    // usePreset(newPreset);
+    // this.setPreset(newPreset);
+  }
+
+  // custom sorting function for palette keys
+  sortPaletteKeys = (a: any, b: any) => {
+    return parseInt(a.key) - parseInt(b.key);
+  }
+
+  // for toast displaying
+  success() {
+    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Success Toast' });
+  }
+
+  warn() {
+    this.messageService.add({ severity: 'warn', summary: 'Warn', detail: 'Warning Toast' });
+  }
+
+  info() {
+    this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Info Toast' });
   }
 
 }

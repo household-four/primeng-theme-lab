@@ -1,4 +1,9 @@
 
+export interface Preset {
+    primitive: Primitive;
+    semantic: Semantic;
+    components?: any;
+}
 
 export interface Primitive {
     borderRadius: BorderRadius;
