@@ -59,13 +59,14 @@ import { FieldsetModule } from 'primeng/fieldset';
 - alternatively, allow users to move around and duplicate the primeng components on the screen
 - allow users to generate color gradients that are not the default primitive or semantic colors
 - allow users to edit the component design token of each component individually 
-- differentiate between light and dark mode and update the theme accordingly
+✅ differentiate between light and dark mode and update the theme accordingly
 */
 
 export class LabComponent implements OnInit {
   constructor(private messageService: MessageService) { }
 
   currentTheme!: Preset;
+  mode: "light" | "dark" = "light";
 
   primitiveColors!: Omit<Primitive, 'borderRadius'>
   semanticColors!: {primary: ColorPalette, surface: ColorPalette};
@@ -87,6 +88,7 @@ export class LabComponent implements OnInit {
 
   ngOnInit(): void {
     this.setPreset(MyPreset);
+    this.mode = window?.matchMedia?.('(prefers-color-scheme:dark)')?.matches ? 'dark' : 'light';
   }
 
   // updates the variables in this class with the preset that was just applied
@@ -95,12 +97,12 @@ export class LabComponent implements OnInit {
     const { borderRadius, ...restPrimitive } = this.currentTheme.primitive;
     const { primary, ...restSemantic} = this.currentTheme.semantic;
     this.primitiveColors = restPrimitive;
-    this.semanticColors= {primary: primary, surface: this.currentTheme.semantic.colorScheme.light.surface};
+    this.semanticColors= {primary: primary, surface: this.currentTheme.semantic.colorScheme[this.mode].surface};
     console.log(this.primitiveColors);
     console.log(this.semanticColors);
   }
 
-  // creates a new palette with the given hex code
+  // updates an entire palette with an array of shades the given hex code
   updatePalette(color: string, $event: ColorPickerChangeEvent, type: 'primitive' | 'semantic' | 'surface'): void {
     const newPalette = palette($event.value as string);
 
@@ -108,7 +110,7 @@ export class LabComponent implements OnInit {
       const newPreset = updatePreset({
         semantic: {
           colorScheme: {
-            light: {
+            [this.mode]: {
               surface: newPalette
             }
           }
@@ -128,15 +130,35 @@ export class LabComponent implements OnInit {
     this.setPreset(newPreset);
   }
 
-  updateSwatch(color: string, ) {
-    // const newPalette = palette($event.value as string);
-    // const newPreset = updatePreset({
-    //   primitive: {
-    //     [color]: newPalette
-    //   }
-    // });
-    // usePreset(newPreset);
-    // this.setPreset(newPreset);
+  // updates a single swatch with a hex code
+  updateSwatch(color: string, shade: string, hex: string, type: 'primitive' | 'semantic' | 'surface'): void {
+    
+    if (color === 'surface') {
+      const newPreset = updatePreset({
+        semantic: {
+          colorScheme: {
+            [this.mode]: {
+              surface: {
+                [shade]: hex
+              }
+            }
+          }
+        }
+      });
+      usePreset(newPreset);
+      this.setPreset(newPreset);
+      return
+    }
+
+    const newPreset = updatePreset({
+      [type]: {
+        [color]: {
+          [shade]: hex
+        }
+      }
+    });
+    usePreset(newPreset);
+    this.setPreset(newPreset);
   }
 
   // custom sorting function for palette keys
