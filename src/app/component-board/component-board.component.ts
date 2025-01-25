@@ -164,6 +164,7 @@ export class ComponentBoardComponent {
       stars: 1,
       startingPrice: 800,
       eraId: "tang",
+      rating: 2.2,
       description: "Basic camping with stunning mountain views, occasional poetry sessions, and an overabundance of Tang Dynasty ambiance.",
       notes: "Guests must chop their own firewood. Bring your own lanterns."
     },
@@ -183,6 +184,7 @@ export class ComponentBoardComponent {
       stars: 5,
       startingPrice: 2000,
       eraId: "tang",
+      rating: 4.5,
       description: "A luxurious palace stay with imperial-level service, rooftop gardens, and koi ponds larger than some cities!",
       notes: "Guests are required to bow to portraits of Emperor Taizong. No loud noises after sunset."
     },
@@ -272,6 +274,7 @@ export class ComponentBoardComponent {
       stars: 5,
       startingPrice: 5000,
       eraId: "belter",
+      rating: 4.1,
       description: "An interstellar getaway with spa-grade hydroponics, holographic entertainment, and luxury vacuum suits for spacewalks.",
       notes: "Guests must book their own shuttle. Oxygen costs extra."
     },
