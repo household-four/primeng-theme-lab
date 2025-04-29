@@ -57,13 +57,50 @@
             <i>Knob, MultiSelect, Listbox</i>
             <div class="component-container">
                 <p-knob />
-                <p-multiselect [options]="cities" [(ngModel)]="selectedCities" optionLabel="name" placeholder="Select Cities" [maxSelectedLabels]="3" styleClass="w-full" />
+                <p-multiselect [options]="cities" [(ngModel)]="selectedCities" optionLabel="name" placeholder="MultiSelect" [maxSelectedLabels]="3" styleClass="w-full" />
                 <p-listbox [options]="cities" [(ngModel)]="selectedCity" optionLabel="name" class="w-full"/>
 
             </div>
+
+            <br>
+
+            <i>Password, RadioButton, Rating, Select</i>
+            <div class="component-container">
+                <p-password [feedback]="false" placeholder="Password"/>
+                <p-radiobutton name="pizza" inputId="ingredient1" />
+                <p-rating [(ngModel)]="rating" />
+                <p-select [options]="cities" [(ngModel)]="selectedCity2" optionLabel="name" placeholder="Select" class="w-full" />
+            </div>
+
+            <br>
+            
+            <i>SelectButton, Slider, Textarea</i>
+            <div class="component-container">
+                <p-selectbutton [options]="stateOptions" [(ngModel)]="selectedState" optionLabel="name" optionValue="code" aria-labelledby="basic" />
+                <p-slider [(ngModel)]="sliderValue" [style]="{'width': '10rem'}"/>
+                <textarea rows="5" cols="20" pTextarea placeholder="Textarea..."></textarea>
+            </div>
+
+            <i>ToggleButton, ToggleSwitch, TreeSelect</i>
+            <div class="component-container">
+                <p-togglebutton [(ngModel)]="checked1" onLabel="On" offLabel="Off" styleClass="w-24" />
+                <p-toggleswitch [(ngModel)]="checked2" />
+                <p-treeselect  [(ngModel)]="selectedTreeNodes" [options]="treeNodes" placeholder="Tree Select" />
+            </div>
+
+            
+            
         </p-fieldset>
         <p-fieldset legend="Data" [toggleable]="true">
+            <i>Dataview</i>
+            <div class="component-container">
 
+            </div>
+
+            <i>OrderList</i>
+            <div class="component-container">
+
+            </div>
 
         </p-fieldset>
         <p-fieldset legend="Panel" [toggleable]="true">
