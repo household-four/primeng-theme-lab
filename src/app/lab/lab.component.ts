@@ -9,6 +9,7 @@ import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ColorPickerChangeEvent, ColorPickerModule } from 'primeng/colorpicker';
 import { DatePickerModule } from 'primeng/datepicker';
+import { DividerModule } from 'primeng/divider';
 import { FloatLabel, FloatLabelModule } from 'primeng/floatlabel';
 import { KnobModule } from 'primeng/knob';
 import { IconFieldModule } from 'primeng/iconfield';
@@ -20,6 +21,8 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { FieldsetModule } from 'primeng/fieldset';
+import { TooltipModule } from 'primeng/tooltip';
+import { PrimengComponent } from '../primeng-components/primeng/primeng.component';
 
 
 
@@ -27,14 +30,18 @@ import { FieldsetModule } from 'primeng/fieldset';
   selector: 'app-lab',
   standalone: true,
   imports: [
+    // app
+    CommonModule,
+    PrimengComponent,
+
+    //primeng
     AccordionModule,
     ButtonModule,
     CheckboxModule,
     ColorPickerModule,
-    CommonModule,
     DatePickerModule,
+    DividerModule,
     FieldsetModule,
-    FloatLabel,
     FloatLabelModule,
     FormsModule,
     IconFieldModule,
@@ -45,7 +52,8 @@ import { FieldsetModule } from 'primeng/fieldset';
     SpeedDialModule,
     SplitButtonModule,
     ToastModule,
-    ToolbarModule
+    ToolbarModule,
+    TooltipModule
   ],
   providers: [MessageService],
   templateUrl: './lab.component.html',
@@ -62,20 +70,9 @@ export class LabComponent implements OnInit {
   primitiveColors!: Omit<Primitive, 'borderRadius'>
   semanticColors!: { primary: ColorPalette, surface: ColorPalette };
 
-  speedDialItems = [
-    { icon: 'pi pi-pencil' },
-    { icon: 'pi pi-refresh' },
-    { icon: 'pi pi-trash' },
-    { icon: 'pi pi-upload' },
-    { icon: 'pi pi-external-link' }
-  ];
+  
 
-  items = [
-    { label: 'Update', command: () => { this.success(); } },
-    { label: 'Delete', command: () => { this.info(); } },
-    { label: 'Angular Website', url: 'http://angular.io' },
-    { label: 'Upload', command: () => { this.info(); } }
-  ];
+  
 
   ngOnInit(): void {
     const isDark = window?.matchMedia?.('(prefers-color-scheme:dark)')?.matches;
@@ -110,6 +107,9 @@ export class LabComponent implements OnInit {
   // updates an entire palette with an array of shades the given hex code
   updatePalette(color: string, $event: ColorPickerChangeEvent, type: 'primitive' | 'semantic' | 'surface'): void {
     const newPalette = palette($event.value as string);
+
+    //let newPalette = palette("#D29F13");
+    //newPalette[500] = "#D29F13"
 
     if (color === 'surface') {
       const newPreset = updateSurfacePalette({
@@ -159,18 +159,7 @@ export class LabComponent implements OnInit {
     return parseInt(a.key) - parseInt(b.key);
   }
 
-  // for toast displaying
-  success() {
-    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Success Toast' });
-  }
 
-  warn() {
-    this.messageService.add({ severity: 'warn', summary: 'Warn', detail: 'Warning Toast' });
-  }
-
-  info() {
-    this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Info Toast' });
-  }
 
   updateBorders() {
     // this should update the color used by all components that have a border design token. 

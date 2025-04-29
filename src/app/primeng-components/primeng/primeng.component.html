@@ -1,0 +1,72 @@
+<h2><i class="pi pi-prime"></i>&nbsp; PrimeNG Components</h2>
+        <p-fieldset legend="Buttons" [toggleable]="true">
+            <i>Button</i>
+            <div class="card flex flex-wrap gap-3 justify-center">
+                <p-button label="Primary" />
+                <p-button label="Secondary" severity="secondary" />
+                <p-button label="Success" severity="success" />
+                <p-button label="Info" severity="info" />
+                <p-button label="Warn" severity="warn" />
+                <p-button label="Help" severity="help" />
+                <p-button label="Danger" severity="danger" />
+                <p-button label="Contrast" severity="contrast" />
+            </div>
+            <br>
+            <i>SpeedDial</i>
+            <div style="height: 60px; position: relative;">
+                <p-speeddial [model]="speedDialItems" direction="right"
+                    [style]="{ position: 'absolute', top: 'calc(70% - 2rem)', left: 0 }" />
+            </div>
+            <br>
+            <i>SplitButton</i>
+            <div class="card flex justify-center flex-wrap gap-4">
+                <p-splitbutton label="Save" (onClick)="success()" [model]="items" />
+                <p-splitbutton label="Save" (onClick)="success()" [model]="items" severity="secondary" />
+                <p-splitbutton label="Save" (onClick)="success()" [model]="items" severity="success" />
+                <p-splitbutton label="Save" (onClick)="success()" [model]="items" severity="info" />
+                <p-splitbutton label="Save" (onClick)="success()" [model]="items" severity="warn" />
+                <p-splitbutton label="Save" (onClick)="success()" [model]="items" severity="help" />
+                <p-splitbutton label="Save" (onClick)="success()" [model]="items" severity="danger" />
+            </div>
+        </p-fieldset>
+        <p-fieldset legend="Form" [toggleable]="true">
+            <i>Checkbox, ColorPicker, Datepicker</i>
+            <div class="component-container">
+                <p-checkbox [binary]="true" />
+                <p-colorpicker />
+                <p-datepicker placeholder="DatePicker"/>
+            </div>
+
+            <br>
+
+            <i>FloatLabel, IconField</i>
+            <div class="component-container" style="padding-top:18px">
+                <p-floatlabel>
+                    <input id="username" pInputText />
+                    <label for="username">FloatLabel</label>
+                </p-floatlabel>
+
+                <p-iconfield>
+                    <p-inputicon styleClass="pi pi-search" />
+                    <input type="text" pInputText placeholder="IconField" />
+                </p-iconfield>
+            </div>
+
+            <br>
+
+            <i>Knob, MultiSelect, Listbox</i>
+            <div class="component-container">
+                <p-knob />
+                <p-multiselect [options]="cities" [(ngModel)]="selectedCities" optionLabel="name" placeholder="Select Cities" [maxSelectedLabels]="3" styleClass="w-full" />
+                <p-listbox [options]="cities" [(ngModel)]="selectedCity" optionLabel="name" class="w-full"/>
+
+            </div>
+        </p-fieldset>
+        <p-fieldset legend="Data" [toggleable]="true">
+
+
+        </p-fieldset>
+        <p-fieldset legend="Panel" [toggleable]="true">
+
+
+        </p-fieldset>
