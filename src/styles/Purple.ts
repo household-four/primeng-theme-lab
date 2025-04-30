@@ -1,8 +1,8 @@
 
-      import Aura from "@primeng/themes/aura";
-      import { definePreset } from "@primeng/themes";
+import Aura from "@primeng/themes/aura";
+import { definePreset } from "@primeng/themes";
 
-      export const MyPrest2 = definePreset(Aura, {
+export const Purple = definePreset(Aura, {
   "primitive": {
     "borderRadius": {
       "none": "0",

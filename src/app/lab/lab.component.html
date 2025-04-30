@@ -21,20 +21,35 @@
 
 
         <!-- Top: Select Presets or upload -->
-        <div class="flex col-12 p-0 gap-4 justify-content-start">
-            <div class="flex-1">
-                <h4>Select a preset: </h4>
-                <p-checkbox [binary]="true" />
-                <p-checkbox [binary]="true" />
-                <p-checkbox [binary]="true" />
-                <p-checkbox [binary]="true" />
+        <p-fieldset legend="Base" [toggleable]="true">
+            <div class="flex col-12 p-0 gap-8 justify-content-start">
+                <div>
+                    <h4>Select a preset </h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <span style="width:100%">
+                            <p-checkbox [binary]="true" value="Aura" id="au"/>
+                            <label for="au" class="ml-2">Aura</label>
+                        </span>
+                        
+                        <span style="width:100%">
+                            <p-checkbox [binary]="true" value="Lara" id="la"/>
+                            <label for="la" class="ml-2">Lara</label>
+                        </span>
+
+                        <span style="width:100%">
+                            <p-checkbox [binary]="true" value="Nora" id="no"/>
+                            <label for="no" class="ml-2">Nora</label>
+                        </span>
+                        
+                    </div>
+                </div>
+                <div>
+                    <h4>Or upload an existing theme: </h4>
+                    <p-button icon="pi pi-upload" class="mr-2" text severity="secondary" (click)="fileInput.click()" />
+                    <input #fileInput type="file" accept=".ts" style="display: none;" (change)="handleFileInput($event)" />
+                </div>
             </div>
-            <div class="flex-1">
-                <h4>Or upload an existing theme: </h4>
-                <p-button icon="pi pi-upload" class="mr-2" text severity="secondary" (click)="fileInput.click()" />
-                <input #fileInput type="file" accept=".ts" style="display: none;" (change)="handleFileInput($event)" />
-            </div>
-        </div>
+        </p-fieldset>
 
         <p-tabs value="1" style="width: 100%">
             <p-tablist>
