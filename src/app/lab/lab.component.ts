@@ -1,12 +1,309 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { MyPreset } from '../../styles/MyTheme';
+import { ColorPalette, FormField, FormFieldOptions, Preset, Primitive, Semantic, SurfaceScale } from './theme';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { $dt, palette, updatePreset, updateSurfacePalette, usePreset } from '@primeng/themes';
+import { AccordionModule } from 'primeng/accordion';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ColorPickerChangeEvent, ColorPickerModule } from 'primeng/colorpicker';
+import { DatePickerModule } from 'primeng/datepicker';
+import { DividerModule } from 'primeng/divider';
+import {  FloatLabelModule } from 'primeng/floatlabel';
+import { KnobModule } from 'primeng/knob';
+import { PopoverModule } from 'primeng/popover';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { SpeedDialModule } from 'primeng/speeddial';
+import { MessageService } from 'primeng/api';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { ToastModule } from 'primeng/toast';
+import { ToolbarModule } from 'primeng/toolbar';
+import { FieldsetModule } from 'primeng/fieldset';
+import { TooltipModule } from 'primeng/tooltip';
+import { PrimengComponent } from '../primeng-components/primeng/primeng.component';
+import { TabsModule } from 'primeng/tabs';
+import { InputTextModule } from 'primeng/inputtext';
+
 
 @Component({
   selector: 'app-lab',
   standalone: true,
-  imports: [],
+  imports: [
+    // app
+    CommonModule,
+    PrimengComponent,
+
+    //primeng
+    AccordionModule,
+    ButtonModule,
+    CheckboxModule,
+    ColorPickerModule,
+    DatePickerModule,
+    DividerModule,
+    FieldsetModule,
+    FloatLabelModule,
+    FormsModule,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
+    KnobModule,
+    PopoverModule,
+    ReactiveFormsModule,
+    ScrollPanelModule,
+    SpeedDialModule,
+    SplitButtonModule,
+    TabsModule,
+    ToastModule,
+    ToolbarModule,
+    TooltipModule
+  ],
+  providers: [MessageService],
   templateUrl: './lab.component.html',
   styleUrls: ['./lab.component.scss']
 })
-export class LabComponent {
 
+export class LabComponent implements OnInit {
+  constructor(private messageService: MessageService, private cdr: ChangeDetectorRef) { }
+
+  currentTheme!: Preset;
+  mode: "light" | "dark" = "light";
+  modeIcon: "pi pi-sun" | "pi pi-moon" = "pi pi-sun";
+
+  primitiveColors!: Omit<Primitive, 'borderRadius'>
+  semanticColors!: { primary: ColorPalette, surface: ColorPalette };
+
+  ngOnInit(): void {
+    const isDark = window?.matchMedia?.('(prefers-color-scheme:dark)')?.matches;
+    this.mode = isDark ? 'dark' : 'light';
+    console.log(`we are  in ${this.mode} mode`);
+    this.modeIcon = isDark ? 'pi pi-moon' : 'pi pi-sun';
+
+
+    this.setPreset(MyPreset);
+
+    const element = document.querySelector('html');
+    if (element) {
+      element.classList.toggle('dark');
+    }
+  }
+
+  // updates the variables in this class with the preset that was just applied
+  setPreset(newPreset: Preset) {
+    this.currentTheme = newPreset;
+    const { borderRadius, ...restPrimitive } = this.currentTheme.primitive;
+    const { primary, ...restSemantic } = this.currentTheme.semantic;
+    this.primitiveColors = restPrimitive;
+
+    this.semanticColors = { primary: primary, surface: this.currentTheme.semantic.colorScheme[this.mode].surface };
+    
+    console.log("primitive", this.primitiveColors);
+    console.log("semantic", this.semanticColors);
+
+    // updates the actual underlying theme 
+    usePreset(newPreset);
+  }
+
+  // updates an entire palette with an array of shades the given hex code
+  updatePalette(color: string, $event: ColorPickerChangeEvent, type: 'primitive' | 'semantic' | 'surface'): void {
+    const newPalette = palette($event.value as string);
+
+    if (color === 'surface') {
+      const newPreset = updateSurfacePalette({
+        [this.mode]: newPalette
+      });
+
+      this.setPreset(newPreset);
+      return;
+    }
+
+    const newPreset = updatePreset({
+      [type]: {
+        [color]: newPalette
+      }
+    });
+
+    this.setPreset(newPreset);
+  }
+
+  // updates a single swatch with a hex code
+  updateSwatch(color: string, shade: string, hex: string, type: 'primitive' | 'semantic' | 'surface'): void {
+
+    if (color === 'surface') {
+      const newPreset = updateSurfacePalette({
+        [this.mode]: {
+          [shade]: hex
+        }
+      });
+      usePreset(newPreset);
+      this.setPreset(newPreset);
+      return
+    }
+
+    const newPreset = updatePreset({
+      [type]: {
+        [color]: {
+          [shade]: hex
+        }
+      }
+    });
+    usePreset(newPreset);
+    this.setPreset(newPreset);
+  }
+
+  // custom sorting function for palette keys
+  sortPaletteKeys = (a: any, b: any) => {
+    return parseInt(a.key) - parseInt(b.key);
+  }
+  
+  applyFormChange(event: string, key: string) {
+    //TODO validation for input here
+    const newPreset = updatePreset({
+      semantic: {
+        colorScheme: {
+          [this.mode]: {
+            formField: {
+              [key]: event
+            }
+          }
+        }
+      }
+    });
+    this.setPreset(newPreset);
+  }
+
+  applyTextChange(event: string, key: string) {
+    //TODO validation for input here
+    const newPreset = updatePreset({
+      semantic: {
+        colorScheme: {
+          [this.mode]: {
+            text: {
+              [key]: event
+            }
+          }
+        }
+      }
+    });
+    this.setPreset(newPreset);
+  }
+
+  
+  applyContentChange(event: string, key: string) {
+    //TODO validation for input here
+    const newPreset = updatePreset({
+      semantic: {
+        colorScheme: {
+          [this.mode]: {
+            content: {
+              [key]: event
+            }
+          }
+        }
+      }
+    });
+    this.setPreset(newPreset);
+  }
+
+  toggleDarkMode(): void {
+    this.mode = this.mode === 'light' ? 'dark' : 'light';
+    this.modeIcon = this.mode === 'light' ? 'pi pi-sun' : 'pi pi-moon';
+    const element = document.querySelector('html');
+    if (element) {
+      element.classList.toggle('dark');
+      console.log("setting dark")
+
+      // still uses the current theme, but updates the surface colors to the new mode
+      this.setPreset(this.currentTheme);
+    }
+  }
+
+  exportTheme() {
+    // Generate the TypeScript file content
+    // this should be able to import different themes besides Aura
+    const fileContent = `
+      import Aura from "@primeng/themes/aura";
+      import { definePreset } from "@primeng/themes";
+
+      export const NewPreset = definePreset(Aura, ${JSON.stringify(this.currentTheme, null, 2)});`;
+
+    // Create a Blob for the file
+    const blob = new Blob([fileContent], { type: 'text/plain;charset=utf-8' });
+
+    // Create a link element to trigger download
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = 'new-preset.ts'; // File name
+
+    // Trigger the download
+    link.click();
+    window.URL.revokeObjectURL(link.href);
+  }
+
+  handleFileInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+  
+    if (input?.files?.length) {
+      const file = input.files[0];
+  
+      if (!file.name.endsWith('.ts')) {
+        alert('Please upload a valid TypeScript file.');
+        return;
+      }
+  
+      const reader = new FileReader();
+  
+      reader.onload = () => {
+        const content = reader.result as string;
+  
+        try {
+          this.validateAndLoadTheme(content);
+        } catch (error) {
+          alert('Invalid theme file. Please check the file format.');
+          console.error('Error processing file:', error);
+        }
+      };
+  
+      reader.onerror = () => {
+        alert('An error occurred while reading the file.');
+      };
+  
+      reader.readAsText(file);
+    }
+  }
+
+  validateAndLoadTheme(content: string): void {
+    // Should add more validation here
+    if (!content.includes('export const ') || !content.includes('definePreset')) {
+      throw new Error('Invalid theme file structure.');
+    }
+  
+    // Extract the theme object from the file
+    const match = content.match(/definePreset\(.*?,\s*([\s\S]*)\);/);
+  
+    if (!match || match.length < 2) {
+      throw new Error('Unable to extract theme object.');
+    }
+  
+    const themeObjectString = match[1].trim();
+  
+    try {
+      // removes leading and trailing parentheses
+      const cleanedThemeObjectString = themeObjectString.replace(/^\(|\)$/g, '');
+      const themeObject = JSON.parse(cleanedThemeObjectString);
+  
+      if (typeof themeObject !== 'object') {
+        throw new Error('Invalid theme object.');
+      }
+  
+      // theme doesnt update before the alert pops up! 
+      this.setPreset(themeObject);
+      this.cdr.detectChanges();
+      alert('Theme uploaded and applied successfully!');
+    } catch (error: any) {
+      throw new Error('Error parsing theme object: ' + error.message);
+    }
+  }
 }

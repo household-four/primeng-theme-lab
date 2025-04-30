@@ -1,38 +1,28 @@
 <div class="flex justify-content-center mt-5">
-  <div class="col-12 md:col-8 lg:col-6">
-    <p-card styleClass="shadow-6">
-      <ng-template pTemplate="title">
-        <span class="flex align-items-center gap-2">
-          <i class="pi pi-palette text-2xl"></i>
-          Theme Designer
-        </span>
-      </ng-template>
+    <div class="col-12 md:col-8 lg:col-6">
+        <p-card styleClass="shadow-6">
+            <ng-template pTemplate="title">
+                <span class="flex align-items-center gap-2">
+                    <i class="pi pi-palette text-2xl"></i>
+                    Theme Designer
+                </span>
+            </ng-template>
 
-      <ng-template pTemplate="subtitle">
-        Explore and create custom themes
-      </ng-template>
+            <ng-template pTemplate="subtitle">
+                Explore and create custom themes
+            </ng-template>
 
-      <ng-template pTemplate="content">
-        <p>Welcome! Choose from our existing library of themes, or jump into the lab to create your own.</p>
+            <ng-template pTemplate="content">
+                <p>Welcome! Choose from our existing library of themes, or jump into the lab to create your own.</p>
 
-        <div class="flex justify-content-center mt-3 gap-3">
-          <button
-            pButton
-            label="Go to Library"
-            icon="pi pi-folder-open"
-            class="p-button-rounded p-button-info"
-            routerLink="/library"
-          ></button>
+                <div class="flex justify-content-center mt-3 gap-3">
+                    <button pButton label="Go to Library" icon="pi pi-folder-open"
+                        class="p-button-rounded p-button-info" routerLink="/library"></button>
 
-          <button
-            pButton
-            label="Go to Lab"
-            icon="pi pi-flask"
-            class="p-button-rounded p-button-warning"
-            routerLink="/lab"
-          ></button>
-        </div>
-      </ng-template>
-    </p-card>
-  </div>
+                    <button pButton label="Go to Lab" icon="pi pi-palette" class="p-button-rounded p-button-warning"
+                        routerLink="/lab"></button>
+                </div>
+            </ng-template>
+        </p-card>
+    </div>
 </div>
