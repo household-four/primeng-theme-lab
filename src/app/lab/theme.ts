@@ -167,27 +167,7 @@ export interface ColorSchemeDefinition {
     primary: PrimaryScheme;
     highlight: Highlight;
     mask: Mask;
-    formField: {
-        background: string;
-        disabledBackground: string;
-        filledBackground: string;
-        filledHoverBackground: string;
-        filledFocusBackground: string;
-        borderColor: string;
-        hoverBorderColor: string;
-        focusBorderColor: string;
-        invalidBorderColor: string;
-        color: string;
-        disabledColor: string;
-        placeholderColor: string;
-        invalidPlaceholderColor: string;
-        floatLabelColor: string;
-        floatLabelFocusColor: string;
-        floatLabelActiveColor: string;
-        floatLabelInvalidColor: string;
-        iconColor: string;
-        shadow: string;
-    };
+    formField: FormFieldOptions;
     text: {
         color: string;
         hoverColor: string;
@@ -221,6 +201,28 @@ export interface ColorSchemeDefinition {
     list: SchemeList;
     navigation: SchemeNavigation;
 }
+
+export interface FormFieldOptions {
+    background: string;
+    disabledBackground: string;
+    filledBackground: string;
+    filledHoverBackground: string;
+    filledFocusBackground: string;
+    borderColor: string;
+    hoverBorderColor: string;
+    focusBorderColor: string;
+    invalidBorderColor: string;
+    color: string;
+    disabledColor: string;
+    placeholderColor: string;
+    invalidPlaceholderColor: string;
+    floatLabelColor: string;
+    floatLabelFocusColor: string;
+    floatLabelActiveColor: string;
+    floatLabelInvalidColor: string;
+    iconColor: string;
+    shadow: string;
+};
 
 export interface PrimaryScheme {
     color: string;

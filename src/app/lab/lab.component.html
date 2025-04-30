@@ -16,10 +16,9 @@
     <p-toast />
 
     <!-- Left hand side: Theme Editor -->
-    <div class="flex flex-wrap gap-4" style="width: 50%; padding: 1rem;">
-        <h2><i class="pi pi-palette"></i>&nbsp; Theme Lab</h2>
+    <div style="width: 50%; padding: 1rem;">
+        <h2 style="width:100%"><i class="pi pi-palette"></i>&nbsp; Theme Lab</h2>
 
-        <p-divider />
 
         <!-- Top: Select Presets or upload -->
         <div class="flex col-12 p-0 gap-4 justify-content-start">
@@ -36,52 +35,119 @@
                 <input #fileInput type="file" accept=".ts" style="display: none;" (change)="handleFileInput($event)" />
             </div>
         </div>
-        <p-divider />
 
-        <!-- todo: add tabs for Colors, Borders, Components, etc. -->
-         <!-- todo: left side should scroll independently of right side -->
-        <!-- Bottom (left): Primitive color palettes -->
-        <div class="flex-1">
-            <h2><i class="pi pi-palette"></i>&nbsp;Primitive Color Palettes</h2>
-            <div *ngFor="let palette of primitiveColors | keyvalue">
-                <div class="palette-title">
-                    <div class="color-swatch">
-                        <p-colorpicker [ngModel]="palette.value['500']"
-                            (onChange)="updatePalette(palette.key, $event, 'primitive')" />
-                    </div>
-                    <h4>{{ palette.key }}</h4>
-                </div>
-                <div class="palette" style="margin-bottom: 1rem; width: 100%;">
-                    <div *ngFor="let shade of palette.value | keyvalue : sortPaletteKeys" class="color-swatch"
-                        pTooltip="{{palette.key}} {{shade.key}}" tooltipPosition="top">
-                        <p-colorpicker [(ngModel)]="shade.value"
-                            (onChange)="updateSwatch(palette.key, shade.key, shade.value, 'primitive')" />
+        <p-tabs value="1" style="width: 100%">
+            <p-tablist>
+                <p-tab value="0">Color Palettes</p-tab>
+                <p-tab value="1">Borders</p-tab>
+                <p-tab value="2">Sizing</p-tab>
+                <p-tab value="3">Components</p-tab>
+            </p-tablist>
+            <p-tabpanels>
+                <p-tabpanel value="0">
+                <div class="flex flex-wrap gap-4">
 
-                    </div>
-                </div>
-            </div>
-        </div>
+                    <!-- todo: left side should scroll independently of right side -->
+                    <!-- Bottom (left): Primitive color palettes -->
+                    <div class="flex-1">
+                        <h2><i class="pi pi-palette"></i>&nbsp;Primitive Color Palettes</h2>
+                        <div *ngFor="let palette of primitiveColors | keyvalue">
+                            <div class="palette-title">
+                                <div class="color-swatch">
+                                    <p-colorpicker [ngModel]="palette.value['500']"
+                                        (onChange)="updatePalette(palette.key, $event, 'primitive')" />
+                                </div>
+                                <h4>{{ palette.key }}</h4>
+                            </div>
+                            <div class="palette" style="margin-bottom: 1rem; width: 100%;">
+                                <div *ngFor="let shade of palette.value | keyvalue : sortPaletteKeys" class="color-swatch"
+                                    pTooltip="{{palette.key}} {{shade.key}}" tooltipPosition="top">
+                                    <p-colorpicker [(ngModel)]="shade.value"
+                                        (onChange)="updateSwatch(palette.key, shade.key, shade.value, 'primitive')" />
 
-        <!-- Bottom (right): Semantic color palettes -->
-        <div class="flex-1">
-            <h2><i class="pi pi-palette"></i>&nbsp;Semantic Color Palettes</h2>
-            <div *ngFor="let palette of semanticColors | keyvalue">
-                <div class="palette-title">
-                    <div class="color-swatch">
-                        <p-colorpicker [ngModel]="palette.value['500']"
-                            (onChange)="updatePalette(palette.key, $event, 'semantic')" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <h4>{{ palette.key }}</h4>
-                </div>
-                <div class="palette" style="margin-bottom: 1rem; width: 100%;">
-                    <div *ngFor="let shade of palette.value | keyvalue : sortPaletteKeys" class="color-swatch"
-                        pTooltip="{{palette.key}} {{shade.key}}" tooltipPosition="top">
-                        <p-colorpicker [(ngModel)]="shade.value"
-                            (onChange)="updateSwatch(palette.key, shade.key, shade.value, 'semantic')" />
+
+                    <!-- Bottom (right): Semantic color palettes -->
+                    <div class="flex-1">
+                        <h2><i class="pi pi-palette"></i>&nbsp;Semantic Color Palettes</h2>
+                        <div *ngFor="let palette of semanticColors | keyvalue">
+                            <div class="palette-title">
+                                <div class="color-swatch">
+                                    <p-colorpicker [ngModel]="palette.value['500']"
+                                        (onChange)="updatePalette(palette.key, $event, 'semantic')" />
+                                </div>
+                                <h4>{{ palette.key }}</h4>
+                            </div>
+                            <div class="palette" style="margin-bottom: 1rem; width: 100%;">
+                                <div *ngFor="let shade of palette.value | keyvalue : sortPaletteKeys" class="color-swatch"
+                                    pTooltip="{{palette.key}} {{shade.key}}" tooltipPosition="top">
+                                    <p-colorpicker [(ngModel)]="shade.value"
+                                        (onChange)="updateSwatch(palette.key, shade.key, shade.value, 'semantic')" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                
                 </div>
-            </div>
-        </div>
+                </p-tabpanel>
+                <p-tabpanel value="1">
+                    
+                        <p-fieldset legend="Text" [toggleable]="true">
+                            <div class="flex flex-wrap gap-4">
+                                <input id="username" pInputText />
+                                <input id="username" pInputText />
+                                <input id="username" pInputText />
+                                <input id="username" pInputText />
+                                <input id="username" pInputText />
+                                <input id="username" pInputText />
+                            </div>
+                        </p-fieldset>
+                        <p-fieldset legend="Content" [toggleable]="true">
+                            <div class="flex flex-wrap gap-4">
+                                <input id="username" pInputText />
+                                <input id="username" pInputText />
+                                <input id="username" pInputText />
+                                <input id="username" pInputText />
+                                <input id="username" pInputText />
+                                <input id="username" pInputText />
+                            </div>
+                        </p-fieldset>
+                        <p-fieldset legend="Form" [toggleable]="true">
+                            <div class="flex flex-wrap gap-4">
+                                <div style="padding-top: 20px" *ngFor="let setting of this.currentTheme.semantic.colorScheme[this.mode].formField | keyvalue">
+                                    <p-floatlabel>
+                                        <input 
+                                            pSize="small" 
+                                            [(ngModel)]="setting.value" 
+                                            (ngModelChange)="applyFormChange($event, setting.key)" 
+                                            [id]="setting.key" 
+                                            pInputText/>
+                                        <label [for]="setting.key">{{setting.key}}</label>
+                                    </p-floatlabel>
+                                </div>
+                            </div>
+                        </p-fieldset>
+                </p-tabpanel>
+                <p-tabpanel value="2">
+                    
+                </p-tabpanel>
+                <p-tabpanel value="3">
+                    
+                </p-tabpanel>
+            </p-tabpanels>
+        </p-tabs>
+
+
+
+        
+        
+
+        
+
+        
     </div>
 
     <!-- Right hand side: PrimeNG Components Display -->

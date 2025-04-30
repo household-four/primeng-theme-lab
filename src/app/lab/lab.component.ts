@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MyPreset } from '../../styles/MyTheme';
-import { ColorPalette, Preset, Primitive, Semantic } from './theme';
+import { ColorPalette, FormField, FormFieldOptions, Preset, Primitive, Semantic, SurfaceScale } from './theme';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { $dt, palette, updatePreset, updateSurfacePalette, usePreset } from '@primeng/themes';
@@ -10,8 +10,9 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ColorPickerChangeEvent, ColorPickerModule } from 'primeng/colorpicker';
 import { DatePickerModule } from 'primeng/datepicker';
 import { DividerModule } from 'primeng/divider';
-import { FloatLabel, FloatLabelModule } from 'primeng/floatlabel';
+import {  FloatLabelModule } from 'primeng/floatlabel';
 import { KnobModule } from 'primeng/knob';
+import { PopoverModule } from 'primeng/popover';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { SpeedDialModule } from 'primeng/speeddial';
@@ -23,7 +24,8 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { FieldsetModule } from 'primeng/fieldset';
 import { TooltipModule } from 'primeng/tooltip';
 import { PrimengComponent } from '../primeng-components/primeng/primeng.component';
-
+import { TabsModule } from 'primeng/tabs';
+import { InputTextModule } from 'primeng/inputtext';
 
 
 @Component({
@@ -46,11 +48,14 @@ import { PrimengComponent } from '../primeng-components/primeng/primeng.componen
     FormsModule,
     IconFieldModule,
     InputIconModule,
+    InputTextModule,
     KnobModule,
+    PopoverModule,
     ReactiveFormsModule,
     ScrollPanelModule,
     SpeedDialModule,
     SplitButtonModule,
+    TabsModule,
     ToastModule,
     ToolbarModule,
     TooltipModule
@@ -69,10 +74,6 @@ export class LabComponent implements OnInit {
 
   primitiveColors!: Omit<Primitive, 'borderRadius'>
   semanticColors!: { primary: ColorPalette, surface: ColorPalette };
-
-  
-
-  
 
   ngOnInit(): void {
     const isDark = window?.matchMedia?.('(prefers-color-scheme:dark)')?.matches;
@@ -95,11 +96,12 @@ export class LabComponent implements OnInit {
     const { borderRadius, ...restPrimitive } = this.currentTheme.primitive;
     const { primary, ...restSemantic } = this.currentTheme.semantic;
     this.primitiveColors = restPrimitive;
-    console.log("this.mode", this.mode)
+
     this.semanticColors = { primary: primary, surface: this.currentTheme.semantic.colorScheme[this.mode].surface };
-    console.log(this.primitiveColors);
-    console.log(this.semanticColors);
     
+    console.log("primitive", this.primitiveColors);
+    console.log("semantic", this.semanticColors);
+
     // updates the actual underlying theme 
     usePreset(newPreset);
   }
@@ -108,16 +110,13 @@ export class LabComponent implements OnInit {
   updatePalette(color: string, $event: ColorPickerChangeEvent, type: 'primitive' | 'semantic' | 'surface'): void {
     const newPalette = palette($event.value as string);
 
-    //let newPalette = palette("#D29F13");
-    //newPalette[500] = "#D29F13"
-
     if (color === 'surface') {
       const newPreset = updateSurfacePalette({
         [this.mode]: newPalette
       });
-      usePreset(newPreset);
+
       this.setPreset(newPreset);
-      return
+      return;
     }
 
     const newPreset = updatePreset({
@@ -125,7 +124,7 @@ export class LabComponent implements OnInit {
         [color]: newPalette
       }
     });
-    usePreset(newPreset);
+
     this.setPreset(newPreset);
   }
 
@@ -158,14 +157,21 @@ export class LabComponent implements OnInit {
   sortPaletteKeys = (a: any, b: any) => {
     return parseInt(a.key) - parseInt(b.key);
   }
-
-
-
-  updateBorders() {
-    // this should update the color used by all components that have a border design token. 
-    // the components currently use one of the 'surface' colors for borders, 
-    // but if you want to have a unique border color and leave the surface palette alone,
-    // we should let people do that 
+  
+  applyFormChange(event: string, key: keyof FormFieldOptions) {
+    //TODO validation for input here
+    const newPreset = updatePreset({
+      semantic: {
+        colorScheme: {
+          [this.mode]: {
+            formField: {
+              [key]: event
+            }
+          }
+        }
+      }
+    });
+    this.setPreset(newPreset);
   }
 
   toggleDarkMode(): void {
