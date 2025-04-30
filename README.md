@@ -3,6 +3,7 @@ This is a project for sharing and creating themes for PrimeNG and is not affilia
 
 This is not the same thing as PrimeNG's Theme Designer. This tool will allow you to edit individual swatches of color palettes, view all PrimeNG components as you edit the theme, view a sample website as you edit the theme, view all components affected by a change, and select from a library of themes to edit and download. 
 
+To upload a theme to the library, create a pull request with your theme's TypeScript file in the src/styles folder.
 
 ## Development server
 
