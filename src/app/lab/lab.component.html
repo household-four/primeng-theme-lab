@@ -94,25 +94,51 @@
                 </div>
                 </p-tabpanel>
                 <p-tabpanel value="1">
-                    
+                    <!-- <div *ngFor="let type of this.currentTheme.semantic.colorScheme[this.mode] | keyvalue">
+                        <p-fieldset [legend]="type.key" [toggleable]="true">
+                            <div class="flex flex-wrap gap-4">
+                                 <div style="padding-top: 20px" *ngFor="let setting of ['text','content','formField'] ">
+                                    <p-floatlabel>
+                                        <input 
+                                            pSize="small" 
+                                            [(ngModel)]="setting.value" 
+                                            (ngModelChange)="applyContentChange($event, setting.key)" 
+                                            [id]="setting.key" 
+                                            pInputText/>
+                                        <label [for]="setting.key">{{setting.key}}</label>
+                                    </p-floatlabel>
+                                </div> 
+                            </div>
+                        </p-fieldset>
+                    </div> -->
                         <p-fieldset legend="Text" [toggleable]="true">
                             <div class="flex flex-wrap gap-4">
-                                <input id="username" pInputText />
-                                <input id="username" pInputText />
-                                <input id="username" pInputText />
-                                <input id="username" pInputText />
-                                <input id="username" pInputText />
-                                <input id="username" pInputText />
+                                <div style="padding-top: 20px" *ngFor="let setting of this.currentTheme.semantic.colorScheme[this.mode].text | keyvalue">
+                                    <p-floatlabel>
+                                        <input 
+                                            pSize="small" 
+                                            [(ngModel)]="setting.value" 
+                                            (ngModelChange)="applyTextChange($event, setting.key)" 
+                                            [id]="setting.key" 
+                                            pInputText/>
+                                        <label [for]="setting.key">{{setting.key}}</label>
+                                    </p-floatlabel>
+                                </div>
                             </div>
                         </p-fieldset>
                         <p-fieldset legend="Content" [toggleable]="true">
                             <div class="flex flex-wrap gap-4">
-                                <input id="username" pInputText />
-                                <input id="username" pInputText />
-                                <input id="username" pInputText />
-                                <input id="username" pInputText />
-                                <input id="username" pInputText />
-                                <input id="username" pInputText />
+                                <div style="padding-top: 20px" *ngFor="let setting of this.currentTheme.semantic.colorScheme[this.mode].content | keyvalue">
+                                    <p-floatlabel>
+                                        <input 
+                                            pSize="small" 
+                                            [(ngModel)]="setting.value" 
+                                            (ngModelChange)="applyContentChange($event, setting.key)" 
+                                            [id]="setting.key" 
+                                            pInputText/>
+                                        <label [for]="setting.key">{{setting.key}}</label>
+                                    </p-floatlabel>
+                                </div>
                             </div>
                         </p-fieldset>
                         <p-fieldset legend="Form" [toggleable]="true">

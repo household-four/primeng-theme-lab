@@ -158,13 +158,46 @@ export class LabComponent implements OnInit {
     return parseInt(a.key) - parseInt(b.key);
   }
   
-  applyFormChange(event: string, key: keyof FormFieldOptions) {
+  applyFormChange(event: string, key: string) {
     //TODO validation for input here
     const newPreset = updatePreset({
       semantic: {
         colorScheme: {
           [this.mode]: {
             formField: {
+              [key]: event
+            }
+          }
+        }
+      }
+    });
+    this.setPreset(newPreset);
+  }
+
+  applyTextChange(event: string, key: string) {
+    //TODO validation for input here
+    const newPreset = updatePreset({
+      semantic: {
+        colorScheme: {
+          [this.mode]: {
+            text: {
+              [key]: event
+            }
+          }
+        }
+      }
+    });
+    this.setPreset(newPreset);
+  }
+
+  
+  applyContentChange(event: string, key: string) {
+    //TODO validation for input here
+    const newPreset = updatePreset({
+      semantic: {
+        colorScheme: {
+          [this.mode]: {
+            content: {
               [key]: event
             }
           }
